@@ -1,0 +1,17 @@
+.answer{
+    overflow: hidden;
+    visibility: hidden;
+    transition: 1s ease;
+}
+
+.answer .hr{
+    height: 1px;
+    background: #7c7c7cac;
+}
+
+.answer p{
+    padding: 8px 0;
+    height: 0%;
+    color: rgb(213, 213, 213);
+    transition: 1s;
+}
