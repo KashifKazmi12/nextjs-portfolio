@@ -9,6 +9,9 @@ import TunisState from "@/context/context";
 import TunisCss from "@/layouts/TunisCss";
 import "@css/styleswitcher.css";
 import { Open_Sans, Poppins } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import "@/public/assets/css/Components_styles/toastCustomStyle.css"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -44,6 +47,17 @@ export default function RootLayout({ children }) {
         <body
           className={`${fontFamily} font-Poppins text-fs-16 font-medium leading-lh-1.6`}
         >
+          <ToastContainer 
+        position="top-center"
+        autoClose={4000}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        theme="dark"
+        pauseOnHover
+        />
           {children}
         </body>
       </html>

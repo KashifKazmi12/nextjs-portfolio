@@ -18,7 +18,7 @@ import 'swiper/css/navigation';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 
 const Testimonials = () => {
-  const { dark } = useContext(TunisContext);
+  const { data } = useContext(TunisContext);
 
   const handleSlideChange = (swiper) => {
     const startIndex = swiper.activeIndex;
@@ -61,7 +61,7 @@ const Testimonials = () => {
     }
   };
 
-  const data = [
+  const sampledata = [
     {
       id:1,
       type: "video",
@@ -166,7 +166,35 @@ const Testimonials = () => {
         style={{padding:'20px 0'}}
         onSlideChange={(swiper) => handleSlideChange(swiper)}
       >
-        {data.map((e)=>{
+        {data.testimonials? 
+        data.testimonials.map((e)=>{
+          if(e.testimonial_type === 'text')
+          return <SwiperSlide key={e.id}>
+            <div className="slider-item">
+              {/* <h1>{e.heading}</h1> */}
+              <p className="content slider-para"><FaQuoteLeft className=" text-fs-26 text-accent inline-block"/> {e.feedback} <FaQuoteRight className="text-fs-26 text-accent inline-block"/> </p>
+              <div className="testimonial-user">
+            <div className="name text-accent font-semibold" style={{fontSize:'18px'}}>{e.client_name}</div>
+            <div className="company">@ {e.company}</div>
+            </div>
+            </div>
+            </SwiperSlide>
+          else
+          return <SwiperSlide key={e.id}>
+            <div className="slider-item">
+            {/* <h1>{e.heading}</h1> */}
+            <div className="content">
+            <video src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/${e.video}`} controls={true}></video>
+            </div>
+            <div className="testimonial-user">
+            <div className="name text-accent font-semibold">{e.client_name}</div>
+            <div className="company">@ {e.company}</div>
+            </div>
+            </div>
+            </SwiperSlide>
+        })
+        :
+        sampledata.map((e)=>{
           if(e.type === 'text')
           return <SwiperSlide key={e.id}>
             <div className="slider-item">
@@ -192,7 +220,8 @@ const Testimonials = () => {
 
             </div>
             </SwiperSlide>
-        })}
+        })
+        }
       </Swiper>
         {/* Testimonials End */}
         <br />

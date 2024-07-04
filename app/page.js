@@ -1,5 +1,5 @@
 import About from "@/components/About";
-import Blog from "@/components/Blog";
+// import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
 import FAQs from "@/components/FAQs";
 import Home from "@/components/Home";
@@ -36,7 +36,7 @@ const Page = () => {
         <Contact />
         {/* Contact Ends */}
         {/* Blog Starts */}
-        <Blog />
+        {/* <Blog /> */}
         {/* Blog Ends */}
       </div>
       <Revealer />

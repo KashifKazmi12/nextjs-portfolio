@@ -108,18 +108,7 @@ const items = [
 ];
 
 const Services = () => {
-  const { popupToggle } = useContext(TunisContext);
-  const [filteredItems, setFilteredItems] = useState(items);
-
-  const filterItems = (type) => {
-    if (type.length) {
-      const filtered = items.filter((item) => item.type === type);
-      setFilteredItems(filtered);
-    }
-    else {
-      setFilteredItems(items)
-    }
-  };
+  const { popupToggle, data } = useContext(TunisContext);
   return (
     <SectionContainer id={"services"}>
       <div className="w-full">
@@ -130,25 +119,38 @@ const Services = () => {
           normalTitle={"Our"}
         />
 
-        {/* Filter Section Start */}
-        <ul className="portfolio-tab-list flex justify-center mb-10" style={{gap:'20px'}} role="tablist">
-              <li className="px-2 py-2 cursor-pointer green" id="tab:r0:0" aria-selected="true" aria-disabled="false" aria-controls="panel:r0:0" data-rttab="true" tabIndex="0" onClick={()=>{filterItems('')}}>ALL</li>
-              <li className="px-2 py-2 cursor-pointer green" id="tab:r0:1" aria-selected="false" aria-disabled="false" aria-controls="panel:r0:1" data-rttab="true" onClick={()=>{filterItems('python')}}>Python</li>
-              <li className="px-2 py-2 cursor-pointer green" id="tab:r0:2" aria-selected="false" aria-disabled="false" aria-controls="panel:r0:2" data-rttab="true" onClick={()=>{filterItems('javascript')}}>JavaScript</li>
-              <li className="px-2 py-2 cursor-pointer green" id="tab:r0:3" aria-selected="false" aria-disabled="false" aria-controls="panel:r0:3" data-rttab="true" onClick={()=>{filterItems('wordpress')}}>Wordpress</li>
-            </ul>
-            {/* Filter Section End */}
         {/* Portfolio Items Starts */}
         <div className="-mt-15 pb-60 xs:pb-20 portfolio">
           <div
             id="grid-gallery"
             className="xl:max-w-1140 custom-md-3:max-w-[calc(100%-195px)] md:max-w-720 sm:max-w-540 xs:max-w-full mx-auto"
           >
-
             {/* Portfolio Grid Starts */}
             <div className="grid-wrap mx-auto mb-25">
               <ul className="gridlist">
-                {filteredItems.map((item) => (
+                {data.services? 
+                data.services.map((item,id) => (
+                  <li
+                    key={id}
+                    className="w-1/3 down-lg:w-1/2 xs:w-full float-left cursor-pointer p-15 xs:px-0"
+                  >
+                    <figure className="transition duration-300 rounded-5 relative overflow-hidden" style={{height:'220px'}}>
+                      <img
+                        className="block relative w-full h-full object-cover rounded-5 transition duration-300"
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/${item.service_image}`}
+                        alt=""
+                      />
+                      {/* <div className="absolute w-full h-full flex items-center justify-center bg-accent">
+                        <span className="uppercase text-fs-18 text-white">
+                          {item.service_title}
+                        </span>
+                      </div> */}
+                    </figure>
+                    <div className="text-fs-16 text-center py-3 uppercase">{item.service_title}</div>
+                  </li>
+                ))
+                :
+                items.map((item) => (
                   <li
                     key={item.id}
                     className="w-1/3 down-lg:w-1/2 xs:w-full float-left cursor-pointer p-15 xs:px-0"
@@ -167,7 +169,8 @@ const Services = () => {
                       </div>
                     </figure>
                   </li>
-                ))}
+                ))
+                }
               </ul>
             </div>
             {/* Portfolio Grid Ends */}

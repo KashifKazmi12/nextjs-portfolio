@@ -12,6 +12,11 @@
 .answer p{
     padding: 8px 0;
     height: 0%;
-    color: rgb(213, 213, 213);
     transition: 1s;
+}
+
+@media (max-width:700px) {
+    .portfolio-tab-list{
+        font-size: 12px;
+    }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useReducer, useState } from "react";
+import { toast } from "react-toastify";
 
 // Create Context
 const TunisContext = createContext();
@@ -124,6 +125,72 @@ const reducer = (state, action) => {
 // Watson State
 const TunisState = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  //data comes from django rest backend
+  const [data, setData] = useState([]);
+
+  const [contactSuccess, setContactSuccess] = useState(false)
+
+
+  const getData = async ()=>{
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/`, {headers:{"secret":"syedkashifkazmi"}});
+    const result = await response.json();
+    const newDetails = result.portfolio.map((each)=>{
+      let {id} = each
+
+      id = (parseInt(id) + 10000).toString(36).padStart(5, '0')
+      return {...each, id:id}
+    })
+    result.portfolio = newDetails
+    setData(result)
+    } catch (error) {
+      console.log("AN ERROR OCCUR DURING FETCHING THE DATA")
+    }
+    
+  }
+
+
+  const contactForm = async (formData) => {
+    const services = formData.services.map(each => each.value).join(', ');
+    setContactSuccess(false)
+
+    const submitData = new FormData();
+    submitData.append("name", formData.name);
+    submitData.append("email", formData.email);
+    submitData.append("company_name", formData.company);
+    submitData.append("phone_number", formData.phone);
+    submitData.append("services", services);
+    submitData.append("budget_range", formData.budget.value);
+    submitData.append("timeline", formData.timelineFrom + ' - ' + formData.timelineTo);
+    submitData.append("file", formData.file);
+    submitData.append("description", formData.projectDescription);
+
+    console.log(submitData);
+
+    
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/contact/`, {
+            method: 'POST',
+            headers: {
+                // You may need to remove the "secret" header if not required by the backend
+                "secret": "syedkashifkazmi"
+            },
+            body: submitData
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to submit form: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+        toast("Submit Successfully")
+        setContactSuccess(true)
+    } catch (error) {
+        console.error("An error occurred during fetching the data:", error);
+    }
+};
+
 
   const changeNav = useCallback((value, toggleValue) => {
     dispatch({
@@ -182,6 +249,10 @@ const TunisState = ({ children }) => {
         blogs,
         dark,
         darkToggle,
+        data,
+        getData,
+        contactForm,
+        contactSuccess
       }}
     >
       {children}

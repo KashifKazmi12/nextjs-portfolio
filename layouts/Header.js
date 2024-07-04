@@ -10,7 +10,7 @@ const Header = () => {
     { id: 4, title: "Portfolio", href: "portfolio", icon: "fa fa-briefcase" },
     { id: 5, title: "Testimonials", href: "testimonials", icon: "fa fa-quote-left" },
     { id: 6, title: "FAQS", href: "faqs", icon: "fa fa-question-circle" },
-    { id: 7, title: "Blog", href: "blog", icon: "fa fa-comments" },
+    // { id: 7, title: "Blog", href: "blog", icon: "fa fa-comments" },
     { id: 8, title: "Contact", href: "contact", icon: "fa fa-envelope-open" },
   ];
   

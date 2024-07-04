@@ -1,28 +1,26 @@
 "use client";
 import { TunisContext } from "@/context/context";
 import SectionContainer from "@/layouts/SectionContainer";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SectionTitle from "./SectionTitle";
 import { FileUploader } from "react-drag-drop-files";
 import { FaFileImage } from "react-icons/fa";
 import Select from "react-select"
 import '@/public/assets/css/Components_styles/Contact.css'
+import Social from "./Social";
+import { each } from "lodash";
+import { toast } from "react-toastify";
 
-const socials = [
-  { id: 1, icon: "fa fa-facebook", link: "#" },
-  { id: 2, icon: "fa fa-twitter", link: "#" },
-  { id: 3, icon: "fa fa-youtube", link: "#" },
-  { id: 4, icon: "fa fa-dribbble", link: "#" },
-];
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-  { value: 'biscuits', label: 'biscuits' },
-  { value: 'jelly', label: 'jelly' },
-  { value: 'Pepsi', label: 'pepsi' },
-]
+
+// const options = [
+//   { value: 'chocolate', label: 'Chocolate' },
+//   { value: 'strawberry', label: 'Strawberry' },
+//   { value: 'vanilla', label: 'Vanilla' },
+//   { value: 'biscuits', label: 'biscuits' },
+//   { value: 'jelly', label: 'jelly' },
+//   { value: 'Pepsi', label: 'pepsi' },
+// ]
 
 const budgetRanges = [
   { value: '15k - 70k', label: '15k - 70k' },
@@ -34,9 +32,17 @@ const budgetRanges = [
 ]
 
 const Contact = () => {
-  const { dark } = useContext(TunisContext);
+  const { dark, contactForm, data, contactSuccess } = useContext(TunisContext);
 
-  const [data, setData] = useState({
+  const [servicesDropDown, setServicesDropDown] = useState()
+
+  useEffect(()=>{
+    const servicesDropDownData = data.services?.map(each => ({value:each.service_title, label:each.service_title}))
+    console.log(servicesDropDownData)
+    setServicesDropDown(servicesDropDownData)
+  }, [data])
+
+  const [formData, setData] = useState({
     name: "",
     email: "",
     phone: "",
@@ -47,15 +53,31 @@ const Contact = () => {
     timelineTo: "",
     projectDescription: "",
     file: "",
-    capcha: "",
   });
 
 
-  const { name, email, phone, company, services, budget, timelineFrom, timelineTo, projectDescription, file, capcha } = data;
+  const { name, email, phone, company, services, budget, timelineFrom, timelineTo, projectDescription, file, capcha } = formData;
   const onChange = (e) => {
-    setData(() => ({ ...data, [e.target.name]: e.target.value }));
-    console.log(data)
+    setData(() => ({ ...formData, [e.target.name]: e.target.value }));
+    // console.log(formData)
   }
+
+  useEffect(()=>{
+    if(contactSuccess){
+        setData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          services: [],
+          budget: "",
+          timelineFrom: "",
+          timelineTo: "",
+          projectDescription: "",
+          file: "",
+        })
+      }
+  },[contactSuccess])
 
   // handleFileChange
 
@@ -65,7 +87,18 @@ const Contact = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(data)
+    for (const field in formData) {
+      if (field !== 'phone' && field !== 'company' && formData.hasOwnProperty(field) && formData[field].length === 0) {
+        let message = field
+        if(field === "timelineFrom" || field === "timelineTo")
+          message = "Timeline"
+        else if(field === "projectDescription")
+          message = "Project Description"
+        toast(`${message} field is Empty`)
+        return
+      }
+    }
+    contactForm(formData)
   };
 
 
@@ -88,41 +121,26 @@ const Contact = () => {
             {/* Contact Details Starts */}
             <div className="w-1/3 down-lg:w-full px-4 xs:px-0">
               <h3 className="text-fs-26 xs:text-fs-21 mb-16 font-semibold uppercase">
-                don't be shy !
+                {data.contactDetails? data.contactDetails.heading:"don't be shy !"}
               </h3>
               <p className="mb-16 font-Open-sans text-fs-15 xs:text-fs-14">
-                Feel free to get in touch with me. I am always open to
-                discussing new projects, creative ideas or opportunities to be
-                part of your visions.
+                {data.contactDetails? data.contactDetails.description: "Feel free to get in touch with me. I am always open to discussing new projects, creative ideas or opportunities to be part of your visions."}
               </p>
               <div className="relative font-Open-sans font-semibold pl-50 pt-5 leading-lh-21 text-fs-15 xs:text-fs-14 mb-16">
                 <i className="fa fa-envelope-open absolute left-0 top-10 text-fs-33 text-accent" />
                 <span className="block opacity-80 uppercase font-normal">
                   mail me
                 </span>
-                steve@mail.com
+                {data.contactDetails? data.contactDetails.email:"steve@mail.com"}
               </div>
               <div className="relative font-Open-sans font-semibold pl-50 pt-5 leading-lh-21 text-fs-15 xs:text-fs-14 mb-16">
                 <i className="fa fa-phone-square absolute left-0 top-10 text-fs-39 text-accent" />
                 <span className="block opacity-80 uppercase font-normal">
                   call me
                 </span>
-                +216 21 184 010
+                {data.contactDetails? data.contactDetails.phone_number:"+216 21 184 010"}
               </div>
-              <ul className="-ml-5 pt-4 mb-48">
-                {socials.map((social) => (
-                  <li key={social.id} className="inline-block">
-                    <a
-                      href="#"
-                      className={`social-item inline-block h-40 w-40 leading-lh-42 text-center text-${dark ? "white" : "black-6"
-                        } transition duration-300 text-fs-17 mx-6 bg-${dark ? "black-2" : "light-grey hover:text-white"
-                        } rounded-full`}
-                    >
-                      <i className={social.icon} />
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <Social fontSm = {true}/>
             </div>
             {/* Contact Details Ends */}
             {/* Contact Form Starts */}
@@ -203,7 +221,15 @@ const Contact = () => {
                   <label htmlFor="" style={{padding:'0 12px', color: dark ? "white" : "gray" }}>Services:</label>
                     <Select
                       styles={
+                      
                         {
+                          control: (provided, state) => ({
+                            ...provided,
+                            // Change this to the desired background color
+                            border: 'none',
+                            backgroundColor: '#dae3ec38',
+                            color: 'white !important'
+                          }),
                           container: (provided, state) => ({
                             ...provided,
                             border: dark ? '1px solid transparent' : '1px solid rgba(0, 0, 0, 0.2)',
@@ -218,39 +244,32 @@ const Contact = () => {
                           option: (provided, state) => ({
                             ...provided,
                             backgroundColor: 'transparent',
-                            color: 'white',
+                            color: dark?"white":"black",
                             '&:hover': {
-                              backgroundColor: 'white',
-                              color: 'black'
+                              backgroundColor: dark?"rgb(116, 116, 116)":"#cacacae5",
+                              color: "white"
                             }
                           }),
                           menu: (provided, state) => ({
                             ...provided,
-                            backgroundColor: '#787b7ee5',
+                            backgroundColor: dark?"rgba(99, 99, 99)":"white",
 
                           }),
                           placeholder: (provided, state) => ({
                             ...provided,
                             color: dark ? 'rgb(107, 107, 107)' : 'rgba(0, 0, 0, 0.54)', // Change this to the desired placeholder color
                           }),
-                          control: (provided, state) => ({
-                            ...provided,
-                            // Change this to the desired background color
-                            border: 'none',
-                            backgroundColor: '#dae3ec38',
-                            color: 'white !important'
-                          }),
                         }}
                       className="mb-30"
                       isMulti
                       placeholder='Select services'
-                      options={options}
+                      options={servicesDropDown}
                       classNamePrefix="text-white"
                       name='services'
-                      value={data.services}
+                      value={formData.services}
                       onChange={(selected) => {
                         setData({
-                          ...data,  // Spread the existing data
+                          ...formData,  // Spread the existing formData
                           ['services']: selected  // Update the services property
                         });
                       }}
@@ -280,15 +299,15 @@ const Contact = () => {
                           option: (provided, state) => ({
                             ...provided,
                             backgroundColor: 'transparent',
-                            color: 'white',
+                            color: dark?"white":"black",
                             '&:hover': {
-                              backgroundColor: 'white',
-                              color: 'black'
+                              backgroundColor: dark?"rgb(116, 116, 116)":"#cacacae5",
+                              color: "white"
                             }
                           }),
                           menu: (provided, state) => ({
                             ...provided,
-                            backgroundColor: '#787b7ee5',
+                            backgroundColor: dark?"rgba(99, 99, 99)":"white",
 
                           }),
                           placeholder: (provided, state) => ({
@@ -308,11 +327,12 @@ const Contact = () => {
                       options={budgetRanges}
                       classNamePrefix="text-white"
                       name='budget'
-                      value={data.budget}
+                      required = {true}
+                      value={formData.budget}
                       className="mb-30"
                       onChange={(selected) => {
                         setData({
-                          ...data,  // Spread the existing data
+                          ...formData,  // Spread the existing formData
                           ['budget']: selected  // Update the services property
                         });
                       }}
@@ -356,9 +376,9 @@ const Contact = () => {
 
                   </div>
                   <div className="w-full" style={{ padding: '0 5px', marginBottom: '14px' }}>
-                    <FileUploader handleChange={handleChange} name="file" children={<div htmlFor='file' className='bg-gray-300/20 w-full flex justify-center items-center gap-4' style={{ border: '3px dotted rgba(69, 69, 69, 0.600)', height: '120px', padding: '0 10px' }}>
+                    <FileUploader required={true} handleChange={handleChange} name="file" children={<div htmlFor='file' className='bg-gray-300/20 w-full flex justify-center items-center gap-4' style={{ border: '3px dotted rgba(69, 69, 69, 0.600)', height: '120px', padding: '0 10px' }}>
                       <FaFileImage style={{ fontSize: '20px' }} />
-                      {data.file ? <span>{data.file.name}</span> : <div><div>Upload or drop a file right here (.doc, .docx, .pdf)</div></div>} </div>} dropMessageStyle={{ background: '#ADD8E6' }} types={["doc", "docx", "pdf", "ppt", "pptx"]} />
+                      {formData.file ? <span>{formData.file.name}</span> : <div><div>Upload or drop a file right here (.doc, .docx, .pdf)</div></div>} </div>} dropMessageStyle={{ background: '#ADD8E6' }} types={["doc", "docx", "pdf", "ppt", "pptx"]} />
                     {/* <FileUploader handleChange={handleChange} name="file" dropMessageStyle={{background:'#ADD8E6'}} types={fileTypes} /> */}
 
                   </div>
