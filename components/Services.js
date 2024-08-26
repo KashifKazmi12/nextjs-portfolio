@@ -137,7 +137,7 @@ const Services = () => {
                     <figure className="transition duration-300 rounded-5 relative overflow-hidden" style={{height:'220px'}}>
                       <img
                         className="block relative w-full h-full object-cover rounded-5 transition duration-300"
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/${item.service_image}`}
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_IMG_HOST}/${item.service_image}`}
                         alt=""
                       />
                       {/* <div className="absolute w-full h-full flex items-center justify-center bg-accent">

@@ -184,7 +184,7 @@ const Testimonials = () => {
             <div className="slider-item">
             {/* <h1>{e.heading}</h1> */}
             <div className="content">
-            <video src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/${e.video}`} controls={true}></video>
+            <video src={`${process.env.NEXT_PUBLIC_BACKEND_IMG_HOST}/${e.video}`} controls={true}></video>
             </div>
             <div className="testimonial-user">
             <div className="name text-accent font-semibold">{e.client_name}</div>

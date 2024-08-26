@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import SectionTitle from "./SectionTitle";
 import "@/public/assets/css/Components_styles/About.css"
 import _debounce from 'lodash/debounce';
+import ReactPlayer from 'react-player';
 // import SectionSizeChecker from "@/utility/SectionSizeChecker";
 
 const bio = [
@@ -124,7 +125,7 @@ const About = () => {
         <div className="xl:max-w-1140 custom-md-3:max-w-[calc(100%-195px)] lg:max-w-960 md:max-w-720 sm:max-w-540 xs:max-w-full mx-auto">
           <div className={`flex flex-row down-lg:flex-col ${data.about?.video_link?.length == 0 && ' text-center'}`}>
             {/* Personal Informations Starts */}
-            <div className={`${ data.about?.video_link?.length !== 0 ? 'xl:basis-1/2 lg:basis-5/12': 'mx-auto'} down-lg:basis-full`}>
+            <div className={`${ data.about?.video_link?.length > 0 ? 'xl:basis-1/2 lg:basis-5/12': 'mx-auto'} down-lg:basis-full`}>
               <h3 className={`uppercase text-fs-26 xs:text-fs-21 pb-22 font-semibold ${dark
                 ? "white"
                 : "black-6 group-hover:text-white transition-all duration-300"
@@ -169,7 +170,14 @@ const About = () => {
             {data.about?.video_link?.length > 0 && 
               <div className="video_container relative mx-auto my-20" >
               <div style={{height:'100%'}}>
-              <iframe id="y_video" width="100%" height="100%" src={`https://www.youtube.com/embed/${data.about?.video_link?.split('/').pop().split('?')[0]}` } className=""  frameBorder="0" allowFullScreen ></iframe>
+              <ReactPlayer
+        url={data.about?.video_link}
+        width='100%'
+        height='100%'
+        style={{ position: 'absolute', top: 0, left: 0 }}
+        controls
+        />
+              {/* <iframe id="y_video" width="100%" height="100%" src={`https://www.youtube.com/embed/${data.about?.video_link?.split('/').pop().split('?')[0]}` } className=""  frameBorder="0" allowFullScreen ></iframe> */}
               {/* <iframe onClick={()=>{setIsVideoStart(true); alert("hiiii")}} id="y_video" width="560" height="315" src={`https://www.youtube.com/embed/${data.about?.video_link.split('/').pop().split('?')[0]}` } className=""  frameBorder="0" allowFullScreen ></iframe> */}
               </div>
               {isVideoStart!==true && <div className="overlay">

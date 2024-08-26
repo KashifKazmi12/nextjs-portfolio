@@ -142,6 +142,7 @@ const TunisState = ({ children }) => {
       return {...each, id:id}
     })
     result.portfolio = newDetails
+    console.log(result)
     setData(result)
     } catch (error) {
       console.log("AN ERROR OCCUR DURING FETCHING THE DATA")

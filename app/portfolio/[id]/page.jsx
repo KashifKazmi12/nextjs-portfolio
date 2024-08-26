@@ -24,7 +24,7 @@ const Page = ({ params }) => {
                     if (item.id == id)
                         return (
                             <>
-                                <div className="portfolio-headerSection relative" style={{ padding: '70px 26px', borderRadius: "0 0 30px 30px", backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url(${process.env.NEXT_PUBLIC_BACKEND_HOST}/${item.portfolio_image})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                                <div className="portfolio-headerSection relative" style={{ padding: '70px 26px', borderRadius: "0 0 30px 30px", backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url(${process.env.NEXT_PUBLIC_BACKEND_IMG_HOST}/${item.portfolio_image})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center' }}>
                                     <div className='flex items-center absolute gap-4' style={{ top: '10px', left: '26px', backgroundColor: 'rgb(255,255,255,0.3)', color: 'white', padding: '4px 8px', cursor: 'pointer' }} onClick={() => router.push('../')}><FaArrowLeft /> <span>Go Back</span></div>
                                     <h1 class="mb-4 font-extrabold leading-none tracking-tight text-white font-Poppins md:text-fs-20">{item.portfolio_title}</h1>
                                     <p class="mb-6 text-lg font-normal lg:text-xl sm:px-16 xl:px-48" style={{ color: 'rgb(240, 240, 240)' }}>{item.service_type.service_title}</p>
@@ -42,7 +42,7 @@ const Page = ({ params }) => {
                                             }} className='bg-accent text-white'>Discuss CTA</button>
                                     </div>
                                     {item.video && <div className="right">
-                                        <video controls={true} className='' src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/${item.video}`} poster="https://assets.markup.io/app/uploads/2022/08/Annotate-video-header.jpg"></video>
+                                        <video controls={true} className='' src={`${process.env.NEXT_PUBLIC_BACKEND_IMG_HOST}/${item.video}`} poster="https://assets.markup.io/app/uploads/2022/08/Annotate-video-header.jpg"></video>
                                     </div>}
 
                                 </div>

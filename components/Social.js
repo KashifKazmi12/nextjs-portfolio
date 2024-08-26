@@ -8,7 +8,7 @@ const Social = ({fontSm}) => {
               {data.socialLinks && data.socialLinks.map((socialLink) => {
                 return (
                   <a href={socialLink.link} target="_blank">
-                    <div className="item cursor-pointer" style={{width:`${fontSm? "26px":"36px"}`}}><img src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/${socialLink.icon}`} /></div>
+                    <div className="item cursor-pointer" style={{width:`${fontSm? "26px":"36px"}`}}><img src={`${process.env.NEXT_PUBLIC_BACKEND_IMG_HOST}/${socialLink.icon}`} /></div>
                   </a>
                 )
               })}

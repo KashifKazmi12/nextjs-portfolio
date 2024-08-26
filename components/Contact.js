@@ -140,6 +140,7 @@ const Contact = () => {
                 </span>
                 {data.contactDetails? data.contactDetails.phone_number:"+216 21 184 010"}
               </div>
+              <br />
               <Social fontSm = {true}/>
             </div>
             {/* Contact Details Ends */}
