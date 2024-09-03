@@ -28,7 +28,7 @@ const FAQs = () => {
     };
     return (
         <SectionContainer id={"faqs"}>
-            <div className="w-full">
+            <div className="w-full mb-32">
                 {/* Section Title Starts */}
                 <SectionTitle
                     bigTitle={"FAQs"}
@@ -41,6 +41,9 @@ const FAQs = () => {
                 <ul className="portfolio-tab-list flex justify-center flex-wrap mt-30 mb-10" style={{ gap: '8px' }} role="tablist">
                 <li style={{background:'rgba(219, 219, 219, 0.1)', padding:'3px 8px', borderRadius:'8px'}} className="px-2 py-2 cursor-pointer green" id="tab:r0:0" aria-selected="true" aria-disabled="false" aria-controls="panel:r0:0" data-rttab="true" tabIndex="0" onClick={() => { filterItems('') }}>ALL</li>
                 {data.services? data.services.map((service)=>{
+                    if(service.service_title === "General")
+                  return null
+                  else
                     return(
                         <li style={{background:'rgba(219, 219, 219, 0.1)', padding:'3px 8px', borderRadius:'8px'}} className="px-2 py-2 cursor-pointer green" id="tab:r0:1" aria-selected="false" aria-disabled="false" aria-controls="panel:r0:1" data-rttab="true" onClick={() => { filterItems(service.service_title) }}>{service.service_title}</li>
                     )
@@ -62,7 +65,7 @@ const FAQs = () => {
                         {data.faqs &&
                             filteredItems.map((item)=>{
                                 return (
-                                <div key={item.id} style={{margin:'3px 0', transition:'1s ease'}}>
+                                <div key={item.id} style={{margin:'3px 0'}}>
                                     <div className=" rounded-t-5" style={{padding: '10px 6px', background: 'rgba(128, 128, 128, 0.149)' }} key={item.id}>
                                         <div className="question outline-none cursor-pointer focus:underline text-fs-17 font-semibold" onClick={() => { if (answerTransitonState === item.id) { setAnswerTransitonState(0) } else { setAnswerTransitonState(item.id) } }}>
                                             <i className="fa fa-arrow-down px-4 text-fs-14"></i> {item.faq_title}

@@ -230,3 +230,14 @@
 .testimonial-user .company{
   font-size: small;
 }
+
+
+
+
+.rotate-effect{
+  transition: 0.3s;
+  rotate: 0deg
+}
+.rotate-effect-parent:hover .rotate-effect{
+  rotate: 360deg;
+}

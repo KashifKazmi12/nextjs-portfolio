@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <SectionContainer id="home">
       <div className="bg-accent fixed w-full h-200prcnt -rotate-15 -top-1/2 -left-83prcnt hidden from-lg:block" />
-      <div className="flex items-center h-screen w-full down-lg:mx-auto down-lg:justify-center xs:text-left down-lg:text-center ">
+      <div className="flex items-center h-screen w-full down-lg:mx-auto down-lg:justify-center down-lg:text-center ">
         {/* Desktop Image Starts */}
         <img
           className="hidden from-lg:block fixed w-1/3 h-[calc(100vh-80px)] left-40 top-40 rounded-30 shadow-1 object-cover"

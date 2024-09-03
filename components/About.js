@@ -149,7 +149,9 @@ const About = () => {
                     ))}
                   </div>
                 ))} */}
-                {data.about ? data.about.description : "Description"}
+                <div className="xs:block custom-md-2:block" style={{textAlign:"justify"}}>
+                  {data.about ? data.about.description : "Description"}
+                </div>
               </div>
               {/* <a
                 className="button group mt-30 overflow-hidden inline-block leading-lh-1.4 rounded-30 text-ellipsis text-center align-middle select-none transition-all duration-250 ease-in-out uppercase no-underline relative z-10 py-16 pr-70 pl-35 text-fs-15 font-semibold text-white bg-transparent outline-0 before:absolute before:-z-10 before:left-0 before:right-0 before:top-0 before:bottom-0 before:translate-x-full hover:before:translate-x-0 before:transition before:duration-300 before:ease-out"
@@ -221,7 +223,7 @@ const About = () => {
                   </h3>
                   <p
                     className="relative xs:text-fs-14 uppercase pl-45 xs:pl-0 xs:before:hidden font-Open-sans font-medium before:absolute before:left-0 before:top-13 before:w-30 before:h-1 before:bg-black-5"
-                  >years of <span>projects</span></p>
+                  >completed <span>projects</span></p>
                 </div>
               </div>
               <div className="fact_items w-1/3 px-15">
@@ -234,7 +236,7 @@ const About = () => {
                     </h3>
                     <p
                       className="relative xs:text-fs-14 uppercase pl-45 xs:pl-0 xs:before:hidden font-Open-sans font-medium before:absolute before:left-0 before:top-13 before:w-30 before:h-1 before:bg-black-5"
-                    >years of <span>customers</span></p>
+                    >Happy <span>customers</span></p>
                   </div>
                 </div>
               </>
@@ -343,10 +345,10 @@ const About = () => {
                     return (
                       <li
                         key={id}
-                        className={`relative pr-20 pl-60 mb-50 after:absolute after:top-0 after:left-20 after:bg-${dark ? "black-4" : "grey"
+                        className={`relative rotate-effect-parent pr-20 pl-60 mb-50 after:absolute after:top-0 after:left-20 after:bg-${dark ? "black-4" : "grey"
                           } after:w-1 after:h-full`}
                       >
-                        <div className="bg-accent w-40 h-40 absolute left-0 leading-lh-40 text-center z-10 rounded-full text-white">
+                        <div className="bg-accent w-40 h-40 absolute left-0 leading-lh-40 text-center z-10 rounded-full rotate-effect text-white">
                           <i className="fa fa-briefcase"></i>
                         </div>
                         <span
@@ -426,11 +428,11 @@ const About = () => {
                       return (
                         <li
                           key={id}
-                          className={`relative pr-20 pl-60 mb-50 after:absolute after:top-0 after:left-20 after:bg-${dark ? "black-4" : "grey"
+                          className={`relative pr-20 pl-60 mb-50 after:absolute after:top-0 after:left-20 rotate-effect-parent after:bg-${dark ? "black-4" : "grey"
                             } after:w-1 after:h-full`}
                         >
-                          <div className="bg-accent w-40 h-40 absolute left-0 leading-lh-40 text-center z-10 rounded-full text-white">
-                            <i className="fa fa-briefcase"></i>
+                          <div className="bg-accent w-40 h-40 absolute left-0 leading-lh-40 text-center z-10 rounded-full text-white rotate-effect">
+                            <i className="fa fa-graduation-cap"></i>
                           </div>
                           <span
                             className={`text-${dark ? "white" : "black-6"

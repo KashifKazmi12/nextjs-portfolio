@@ -30,16 +30,18 @@ const Page = ({ params }) => {
                                     <p class="mb-6 text-lg font-normal lg:text-xl sm:px-16 xl:px-48" style={{ color: 'rgb(240, 240, 240)' }}>{item.service_type.service_title}</p>
                                 </div>
 
-                                <a className='link' href={item.link} target='_blank'>Project Link: <span className=' underline flex items-center gap-5'>{item.link} <FaLink /></span></a>
+                                <a className='link' href={item.link} target='_blank'>Project Link: <span className=' underline flex items-center gap-5'>Visit Website <FaLink /></span></a>
                                 <div className="portfolio_details flex font-Open-sans">
                                     <div className="left">
                                         <h1 className=' text-fs-33 font-bold'>What is <span className='text-accent'>{item.portfolio_title}?</span></h1>
-                                        <p className={`${dark ? 'portfolio_para_dark' : ''}`}>{item.description}</p>
+                                        <p className={`${dark ? 'portfolio_para_dark' : ''}`} dangerouslySetInnerHTML={{ __html: item.description }} />
                                         <Social fontSm={true}/>
+                                        <div className='flex down-lg:justify-center'>
                                         <button onClick={()=>{
                                             router.push( '/');
                                             changeNav('contact')
                                             }} className='bg-accent text-white'>Discuss CTA</button>
+                                        </div>
                                     </div>
                                     {item.video && <div className="right">
                                         <video controls={true} className='' src={`${process.env.NEXT_PUBLIC_BACKEND_IMG_HOST}/${item.video}`} poster="https://assets.markup.io/app/uploads/2022/08/Annotate-video-header.jpg"></video>

@@ -129,10 +129,14 @@ const Services = () => {
             <div className="grid-wrap mx-auto mb-25">
               <ul className="gridlist">
                 {data.services? 
-                data.services.map((item,id) => (
+                data.services.map((item,id) => {
+                  if(item.service_title === "General")
+                  return null
+                  else
+                  return(
                   <li
                     key={id}
-                    className="w-1/3 down-lg:w-1/2 xs:w-full float-left cursor-pointer p-15 xs:px-0"
+                    className="w-1/3 down-lg:w-1/2 xs:w-full float-left p-15 xs:px-0"
                   >
                     <figure className="transition duration-300 rounded-5 relative overflow-hidden" style={{height:'220px'}}>
                       <img
@@ -148,7 +152,7 @@ const Services = () => {
                     </figure>
                     <div className="text-fs-16 text-center py-3 uppercase">{item.service_title}</div>
                   </li>
-                ))
+                )})
                 :
                 items.map((item) => (
                   <li
